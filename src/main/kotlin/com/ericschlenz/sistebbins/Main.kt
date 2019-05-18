@@ -4,13 +4,15 @@ import com.ericschlenz.sistebbins.Output.Companion.explain
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.validate
 import com.github.ajalt.clikt.parameters.types.int
 import java.util.*
 
 class Main : CliktCommand() {
     private val random = Random()
     private val drawCount: Int by option(help = "Number of cards to draw, flip, and return to deck").int()
-        .default(random.nextInt(52 + 1))
+        .default(random.nextInt(53))
+        .validate { require(it in (0..52)) { "--draw-count must have a value between 0 and 52" } }
 
     override fun run() {
         println("\n==== Si Stebbins Stack ====\n")
